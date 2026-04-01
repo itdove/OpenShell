@@ -877,12 +877,14 @@ pub(crate) fn spawn_route_refresh(
 
 /// Minimum read-only paths required for a proxy-mode sandbox child process to
 /// function: dynamic linker, shared libraries, DNS resolution, CA certs,
-/// Python venv, and openshell logs.
-const PROXY_BASELINE_READ_ONLY: &[&str] = &["/usr", "/lib", "/etc", "/app", "/var/log"];
+/// Python venv, openshell logs, /proc for process introspection, and
+/// /dev/urandom for cryptographic randomness (required by Python, Node.js, etc.).
+const PROXY_BASELINE_READ_ONLY: &[&str] =
+    &["/usr", "/lib", "/etc", "/app", "/var/log", "/proc", "/dev/urandom"];
 
 /// Minimum read-write paths required for a proxy-mode sandbox child process:
-/// user working directory and temporary files.
-const PROXY_BASELINE_READ_WRITE: &[&str] = &["/sandbox", "/tmp"];
+/// user working directory, temporary files, and /dev/null for output redirection.
+const PROXY_BASELINE_READ_WRITE: &[&str] = &["/sandbox", "/tmp", "/dev/null"];
 
 /// Ensure a proto `SandboxPolicy` includes the baseline filesystem paths
 /// required for proxy-mode sandboxes.  Paths are only added if missing;
