@@ -879,8 +879,15 @@ pub(crate) fn spawn_route_refresh(
 /// function: dynamic linker, shared libraries, DNS resolution, CA certs,
 /// Python venv, openshell logs, /proc for process introspection, and
 /// /dev/urandom for cryptographic randomness (required by Python, Node.js, etc.).
-const PROXY_BASELINE_READ_ONLY: &[&str] =
-    &["/usr", "/lib", "/etc", "/app", "/var/log", "/proc", "/dev/urandom"];
+const PROXY_BASELINE_READ_ONLY: &[&str] = &[
+    "/usr",
+    "/lib",
+    "/etc",
+    "/app",
+    "/var/log",
+    "/proc",
+    "/dev/urandom",
+];
 
 /// Minimum read-write paths required for a proxy-mode sandbox child process:
 /// user working directory, temporary files, and /dev/null for output redirection.
